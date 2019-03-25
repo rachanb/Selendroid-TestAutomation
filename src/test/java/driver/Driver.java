@@ -8,17 +8,14 @@ import java.net.URL;
 import java.util.Properties;
 
 
+import cucumber.api.CucumberOptions;
+
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
-import cucumber.api.CucumberOptions;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 
 import cucumber.api.testng.AbstractTestNGCucumberTests;
 import io.appium.java_client.android.AndroidDriver;
@@ -26,50 +23,85 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 
-//@RunWith(Cucumber.class)
+/**
+ * The Class Driver.
+ */
 @CucumberOptions(
       	strict = true,
       	monochrome = true,
       	features = {"src/test/resources/features"},
       	glue= {"stepdefinations"},
-      	plugin = {"pretty", "html:target/cucumber-html-report" }
+      	plugin = {"pretty", "html:target/cucumber-report" }
         )
 
 public class Driver extends AbstractTestNGCucumberTests{
+	
+	/** The Constant logger. */
+	final static Logger logger = Logger.getLogger(Driver.class);
 
+	/** The appium driver local service. */
 	static AppiumDriverLocalService appiumDriverLocalService;
+	
+	/** The properties. */
 	static Properties properties;
 	
+	/** The appium server U rl. */
 	static String appiumServerURl;
+	
+	/** The platform. */
 	static String platform;
+	
+	/** The device name. */
 	static String deviceName;
+	
+	/** The application location. */
 	static String applicationLocation;
 	
+	/** The driver. */
 	static WebDriver driver;
 
+	/**
+	 * Setup.
+	 */
 	@BeforeSuite
 	public void setup() {
-		
+		logger.info("--- SETUP -- ");
 		sartAppiumServer();
 		initProperties();
 		invokeDriver();
 	}
 
+	/**
+	 * Sart appium server.
+	 */
 	public void sartAppiumServer() {
 
+		logger.info("--- STARTING APPIUM SERVER -- ");
+		
 		appiumDriverLocalService = AppiumDriverLocalService.buildDefaultService();
 		appiumDriverLocalService.start();
 
 	}
 	
+	/**
+	 * Stop appium server.
+	 */
 	public void stopAppiumServer() {
+		logger.info("--- STOPPING APPIUM SERVER -- ");
 		appiumDriverLocalService.stop();
 	}
 
+	/**
+	 * Invoke driver.
+	 *
+	 * @return the web driver
+	 */
 	private WebDriver invokeDriver() {
 
 		DesiredCapabilities capabilities =  new DesiredCapabilities();
 		driver=null;
+		
+		logger.info("--- INVOKING DRIVER -- ");
 
 		try {
 
@@ -91,19 +123,27 @@ public class Driver extends AbstractTestNGCucumberTests{
 
 		}
 		catch(Exception e) {
-			System.out.println("In Exception--"+e);
+			logger.error("Into Exception, Unable to initialize the driver -- "+e);
 		}
 		return driver;
 	}
 
+	/**
+	 * Gets the driver.
+	 *
+	 * @return the driver
+	 */
 	public static WebDriver getDriver () {
 		return driver;
 	}
 
 
+	/**
+	 * Inits the properties.
+	 */
 	public void initProperties(){
 
-
+		logger.info("--- INITIALIZING PROPERTIES -- ");
 		properties = new Properties();
 		InputStream input = null;
 
@@ -118,22 +158,26 @@ public class Driver extends AbstractTestNGCucumberTests{
 			deviceName = properties.getProperty("DEVICE.NAME");
 			applicationLocation = properties.getProperty("APPLICATION.PATH");
 
-		} catch (IOException ex) {
-			ex.printStackTrace();
+		} catch (IOException e) {
+			logger.error("Into Exception -- "+e);
 		} finally {
 			if (input != null) {
 				try {
 					input.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error("Into Exception -- "+e);
 				}
 			}
 		}
 
 	}
 
+	/**
+	 * Tear down.
+	 */
 	@AfterSuite
 	public void tearDown() {
+		logger.info("--- TEAR DOWN -- ");
 		stopAppiumServer();
 	}
 }
