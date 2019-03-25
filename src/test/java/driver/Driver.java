@@ -178,6 +178,7 @@ public class Driver extends AbstractTestNGCucumberTests{
 	@AfterSuite
 	public void tearDown() {
 		logger.info("--- TEAR DOWN -- ");
+		driver.quit();
 		stopAppiumServer();
 	}
 }

@@ -16,7 +16,7 @@ Feature: Selendroid Tests
       | username | email            | password | name  | language | termcondition |
       | User1    | user1@wunder.com | pass1    | User1 | Java     | yes           |
 
-	Scenario: Navigating to Web View Interaction
+  Scenario: Verify the displaying text functionality
     Given I am on the "Selendroid Home" screen
     When I click on "Display Text View" button on Home Screen
     Then I get to see the text on screen
