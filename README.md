@@ -23,8 +23,8 @@ Test Automation for the Selendroid
 * Log4j
 
 ## Test Execution
-$ `git clone https://github.com/rachanb/Selendroid-TestAutomation`
-$ `mvn clean install`
-Results generated under target > cucumber-report folder
+* $ `git clone https://github.com/rachanb/Selendroid-TestAutomation`
+* $ `mvn clean install`
+* Results generated under target > cucumber-report folder
 
 
