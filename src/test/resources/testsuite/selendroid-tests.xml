@@ -1,0 +1,9 @@
+<suite name="selendroid-tests">
+
+<test name="test Selendroid functionality">
+	<classes>
+		<class name="driver.Driver"/>		
+	</classes>
+</test>
+
+</suite>
