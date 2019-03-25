@@ -1,5 +1,4 @@
 # Selendroid-TestAutomation
-# Selendroid-TestAutomation
 Test Automation for the Selendroid
 
 ## Pre-requisites
