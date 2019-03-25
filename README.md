@@ -23,6 +23,7 @@ Test Automation for the Selendroid
 * Log4j
 
 ## Test Execution
+* update your Android server connection link and the device name in the src/test/resources/config/automation-config.properties file
 * $ `git clone https://github.com/rachanb/Selendroid-TestAutomation`
 * $ `mvn clean install`
 * Results generated under target > cucumber-report folder
